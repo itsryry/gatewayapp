@@ -7,16 +7,17 @@
 //
 
 import UIKit
+import gateway
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        return true
+        EvergentGatewayAppDelegate.sharedInstance.setClientUrl(url: "https://dev-web-hooq.evergent.com/fbiosconnect?returnUrl=https://google.co.in&deviceName=iphone&deviceType=phone&serialNo=2803216015&modelNo=123123123&ip=183.82.121.105")
+        return EvergentGatewayAppDelegate.sharedInstance.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -40,7 +41,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
+    
+    @objc(application:openURL:sourceApplication:annotation:) func application(_ application: UIApplication, open openUrl: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return EvergentGatewayAppDelegate.sharedInstance.application(application, openUrl: openUrl, sourceApplication: sourceApplication, annotation: annotation)
+    }
 
 }
 
